@@ -8,8 +8,8 @@ class RenameFilesAsDate:
     def __init__(self, root_directory):
         self.root_directory = os.path.expanduser(root_directory)
         self.error_files = {}
-        self.video_extensions = ('.mp4', '.avi', '.mov', '.mkv', '.wmv')
-        self.image_extensions = ('.jpg', '.jpeg', '.png', '.gif', 'webp')
+        self.video_extensions = ('.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv', '.webm', '.m4v', '.3gp')
+        self.image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.tiff', '.svg', '.heic')
 
     def rename_files(self, file_type='all', dry_run=False):
         current_date = datetime.datetime.now().strftime("%m%d")
@@ -22,12 +22,12 @@ class RenameFilesAsDate:
 
     def _is_already_renamed(self, filename, current_date):
         base_name = os.path.splitext(filename)[0]
-        pattern = re.compile(f'^.*-{current_date}-\\d{{2}}$')
+        pattern = re.compile(f'^.*-{current_date}-\\d+$')
         return bool(pattern.match(base_name))
 
     def _get_max_sequence_number(self, directory, current_date):
         max_seq = 0
-        pattern = re.compile(f'^.*-{current_date}-(\\d{{2}}).*$')
+        pattern = re.compile(f'^.*-{current_date}-(\\d+).*$')
 
         for entry in os.listdir(directory):
             match = pattern.match(os.path.splitext(entry)[0])
@@ -54,10 +54,12 @@ class RenameFilesAsDate:
 
         if files_to_rename:
             count = self._get_max_sequence_number(directory, current_date) + 1
+            total_files = len(files_to_rename)
+            num_digits = len(str(total_files + count - 1))
 
             for entry in sorted(files_to_rename):
                 entry_path = os.path.join(directory, entry)
-                new_name = f"{folder_name}-{current_date}-{count:02d}{os.path.splitext(entry)[1].lower()}"
+                new_name = f"{folder_name}-{current_date}-{count:0{num_digits}d}{os.path.splitext(entry)[1].lower()}"
                 new_path = os.path.join(directory, new_name)
 
                 if dry_run:
