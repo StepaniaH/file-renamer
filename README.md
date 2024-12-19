@@ -6,11 +6,12 @@ A Python script for recursively renaming video and image files within directorie
 
 - Recursively processes all subdirectories
 - Renames files to `foldername-MMDD-NN` format
-- Supports common video formats (.mp4, .avi, .mov, .mkv, .wmv)
-- Supports common image formats (.jpg, .jpeg, .png, .gif)
+- Supports common video and image formats
 - Maintains existing renamed files (won't rename twice)
 - Provides dry-run mode for preview
 - Allows filtering by file type
+- Calculate the number dynamically based on the amount of files to be
+renamed
 
 ## Usage
 
