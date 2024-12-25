@@ -2,7 +2,7 @@ from typing import Tuple
 
 class FileTypes:
     """
-        The definition of file classes
+        The definition and process of file classes
     """
     
     VIDEO_EXTENSIONS: Tuple[str, ...] = (
@@ -19,7 +19,14 @@ class FileTypes:
     def get_supported_extensions(cls, file_type: str = 'all') -> Tuple[str, ...]:
         """
             Get supported file extensions
+            Args:
+                file_type: Type of files ('all', 'video', 'image')
+            Returns:
+                The tuple of supported extensions of files
         """
+        if file_type not in ('all', 'video', 'image'):
+            raise ValueError(f"Unsupported file type: {file_type}")
+
         if file_type == 'video':
             return cls.VIDEO_EXTENSIONS
         elif file_type == 'image':
