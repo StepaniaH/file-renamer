@@ -1,1 +1,12 @@
 .DS_Store
+tests/test_folder/
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+venv/
+env/
+.env/
+.venv/
